@@ -1,6 +1,8 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export interface IBulletProps {
+  id: ReturnType<typeof uuidv4>;
   damage: number;
   x: number;
   y: number;
@@ -15,6 +17,7 @@ export default class Bullet extends React.Component<IBulletProps> {
   render() {
     return (
       <div
+        id={this.props.id}
         className="absolute bg-red-500 z-0"
         style={{
           width: 10,

@@ -1,4 +1,5 @@
-import React, { ReactElement } from "react";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import Bullet, { IBulletProps } from "./bullet";
 import Player from "./player";
 
@@ -39,6 +40,7 @@ export default class BulletManager extends React.Component<
     if (event.key === " ") {
       this.setState((prevState) => {
         const bullet = {
+          id: uuidv4(),
           damage: 100,
           x: this.props.playerRef.current!.state.x + 20,
           y: this.props.playerRef.current!.state.y,
@@ -52,19 +54,24 @@ export default class BulletManager extends React.Component<
   }
 
   update() {
-    this.setState((prevState) => {
-      let bullets = prevState.bullets;
+    let bullets = this.state.bullets;
+    let newBullets = bullets;
 
-      bullets.forEach((bullet) => {
-        bullet.y += 10;
-      });
-
-      bullets = bullets.filter((bullet) => {
-        return bullet.y < this.props.canvasHeight;
-      });
-
-      return { bullets };
+    newBullets = bullets.filter((bullet) => {
+      return bullet.y < this.props.canvasHeight;
     });
+
+    newBullets.forEach((bullet) => {
+      bullet.y += 10;
+    });
+
+    bullets.forEach((bullet) => {
+      if (!newBullets.includes(bullet)) {
+        this.removeBullet(bullet.id);
+      }
+    });
+
+    this.setBullets(newBullets);
   }
 
   getBullets(): IBulletProps[] {
@@ -75,11 +82,18 @@ export default class BulletManager extends React.Component<
     this.setState({ bullets: newBullets });
   }
 
+  removeBullet(id: ReturnType<typeof uuidv4>) {
+    const bullet = document.getElementById(id);
+    if (bullet) {
+      bullet.parentNode!.removeChild(bullet);
+    }
+  }
+
   render() {
     return (
       <div>
-        {this.state.bullets.map((bullet, index) => {
-          return <Bullet key={index} {...bullet} />;
+        {this.state.bullets.map((bullet) => {
+          return <Bullet key={bullet.id} {...bullet} />;
         })}
       </div>
     );
