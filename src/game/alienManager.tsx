@@ -38,7 +38,7 @@ export default class AlienManager extends React.Component<
     for (let i = 0; i < 11; i++) {
       for (let j = 0; j < 5; j++) {
         aliens.push({
-          x: 10 + (i * 50 + 10),
+          x: this.props.canvasWidth / 6 + (i * 50 + 10),
           y: this.props.canvasHeight - 280 + (j * 50 + 10),
           hp: 100,
         });
@@ -51,6 +51,7 @@ export default class AlienManager extends React.Component<
     let aliens = this.state.aliens;
     let minX = 100000;
     let maxX = 0;
+    let minY = 100000;
 
     aliens.forEach((alien) => {
       if (alien.x < minX) {
@@ -58,6 +59,9 @@ export default class AlienManager extends React.Component<
       }
       if (alien.x > maxX) {
         maxX = alien.x;
+      }
+      if (alien.y < minY) {
+        minY = alien.y;
       }
     });
 
@@ -87,7 +91,6 @@ export default class AlienManager extends React.Component<
     let newAliens: IAlienProps[] = [];
 
     aliens.forEach((alien) => {
-      let collision = false;
       bullets.forEach((bullet) => {
         if (
           bullet.x >= alien.x &&

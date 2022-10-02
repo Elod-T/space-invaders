@@ -16,8 +16,8 @@ export default class Alien extends React.Component<IAlienProps> {
       <div
         className="absolute z-0"
         style={{
-          width: 50,
-          height: 50,
+          width: 40,
+          height: 40,
           left: this.props.x,
           bottom: this.props.y,
           backgroundImage: "url(./alien.png)",
