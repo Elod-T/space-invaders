@@ -10,9 +10,11 @@ interface IPlayerState {
   nextMove: number;
   x: number;
   y: number;
+  hp: number;
+  lives: number;
 }
 
-export default class Player extends React.Component<
+export default class Player extends React.PureComponent<
   IPlayerProps,
   IPlayerState
 > {
@@ -22,9 +24,11 @@ export default class Player extends React.Component<
       x: props.x,
       y: props.y,
       nextMove: 0,
+      hp: 100,
+      lives: 3,
     };
-    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.update = this.update.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
