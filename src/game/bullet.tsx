@@ -9,7 +9,7 @@ export interface IBulletProps {
   canvasHeight: number;
 }
 
-export default class Bullet extends React.Component<IBulletProps> {
+export default class Bullet extends React.PureComponent<IBulletProps> {
   constructor(props: IBulletProps) {
     super(props);
   }
