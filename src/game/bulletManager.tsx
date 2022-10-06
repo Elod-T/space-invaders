@@ -28,29 +28,19 @@ export default class BulletManager extends React.Component<
     this.setBullets = this.setBullets.bind(this);
   }
 
-  componentDidMount() {
-    window.addEventListener("keydown", this.shoot);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.shoot);
-  }
-
-  shoot(event: KeyboardEvent) {
-    if (event.key === " ") {
-      this.setState((prevState) => {
-        const bullet = {
-          id: uuidv4(),
-          damage: 100,
-          x: this.props.playerRef.current!.state.x + 20,
-          y: this.props.playerRef.current!.state.y,
-          canvasHeight: this.props.canvasHeight,
-        };
-        return {
-          bullets: [...prevState.bullets, bullet],
-        };
-      });
-    }
+  shoot() {
+    this.setState((prevState) => {
+      const bullet = {
+        id: uuidv4(),
+        damage: 100,
+        x: this.props.playerRef.current!.state.x + 20,
+        y: this.props.playerRef.current!.state.y,
+        canvasHeight: this.props.canvasHeight,
+      };
+      return {
+        bullets: [...prevState.bullets, bullet],
+      };
+    });
   }
 
   update() {
@@ -91,7 +81,7 @@ export default class BulletManager extends React.Component<
 
   render() {
     return (
-      <div>
+      <div id="bulletmanager">
         {this.state.bullets.map((bullet) => {
           return <Bullet key={bullet.id} {...bullet} />;
         })}
