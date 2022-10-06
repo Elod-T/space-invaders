@@ -5,8 +5,10 @@ module.exports = {
     extend: {
       animation: {
         blob: "blob 20s infinite",
+        "fade-in": "fade-in 1s ease-in-out forwards",
         "fade-out": "fade-out 1.5s ease-in-out forwards",
         "sharpen-in": "sharpen-in 1.5s ease-in-out forwards",
+        "sharpen-out": "sharpen-out 1.5s ease-in-out forwards",
       },
       keyframes: {
         blob: {
@@ -23,6 +25,14 @@ module.exports = {
             transform: "translate(0px, 0px) scale(1)",
           },
         },
+        "fade-in": {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
         "fade-out": {
           "0%": {
             opacity: 1,
@@ -37,6 +47,14 @@ module.exports = {
           },
           "100%": {
             filter: "blur(0px)",
+          },
+        },
+        "sharpen-out": {
+          "0%": {
+            filter: "blur(0px)",
+          },
+          "100%": {
+            filter: "blur(8px)",
           },
         },
       },
