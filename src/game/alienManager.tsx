@@ -27,6 +27,7 @@ export default class AlienManager extends React.Component<
       aliens: [],
     };
     this.update = this.update.bind(this);
+    this.getLowestY = this.getLowestY.bind(this);
   }
 
   componentDidMount() {
@@ -71,7 +72,7 @@ export default class AlienManager extends React.Component<
       moveX = this.state.direction;
     } else {
       moveX = this.state.direction * -1;
-      moveY = -10;
+      moveY = -20;
 
       this.setState({ direction: this.state.direction * -1 });
     }
@@ -93,8 +94,8 @@ export default class AlienManager extends React.Component<
     aliens.forEach((alien) => {
       bullets.forEach((bullet) => {
         if (
-          bullet.x >= alien.x &&
-          bullet.x <= alien.x + 40 &&
+          bullet.x + 10 >= alien.x &&
+          bullet.x + 10 <= alien.x + 40 &&
           bullet.y >= alien.y &&
           bullet.y <= alien.y + 40
         ) {
@@ -113,6 +114,16 @@ export default class AlienManager extends React.Component<
   update() {
     this.moveAliens();
     this.checkCollision();
+  }
+
+  getLowestY(): number {
+    let lowestY = 100000;
+    this.state.aliens.forEach((alien) => {
+      if (alien.y < lowestY) {
+        lowestY = alien.y;
+      }
+    });
+    return lowestY;
   }
 
   render() {
