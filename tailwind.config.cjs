@@ -9,6 +9,7 @@ module.exports = {
         "fade-out": "fade-out 1.5s ease-in-out forwards",
         "sharpen-in": "sharpen-in 1.5s ease-in-out forwards",
         "sharpen-out": "sharpen-out 1.5s ease-in-out forwards",
+        pulse: "pulse 2s infinite",
       },
       keyframes: {
         blob: {
@@ -55,6 +56,17 @@ module.exports = {
           },
           "100%": {
             filter: "blur(8px)",
+          },
+        },
+        pulse: {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "50%": {
+            transform: "scale(2)",
+          },
+          "100%": {
+            transform: "scale(1)",
           },
         },
       },
