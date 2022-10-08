@@ -20,7 +20,7 @@ export default class Alien extends React.Component<IAlienProps> {
           height: 40,
           left: this.props.x,
           bottom: this.props.y,
-          backgroundImage: "url(./alien.png)",
+          backgroundImage: "url(/alien.png)",
           backgroundRepeat: "no-repeat",
         }}
       ></div>
