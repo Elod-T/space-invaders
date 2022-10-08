@@ -7,10 +7,12 @@ interface IBulletManagerProps {
   canvasHeight: number;
   canvasWidth: number;
   playerRef: React.RefObject<Player>;
+  volume: number;
 }
 
 interface IBulletManagerState {
   bullets: IBulletProps[];
+  shootAudio: HTMLAudioElement;
 }
 
 export default class BulletManager extends React.Component<
@@ -21,6 +23,7 @@ export default class BulletManager extends React.Component<
     super(props);
     this.state = {
       bullets: [],
+      shootAudio: new Audio("/audio/shoot.wav"),
     };
     this.shoot = this.shoot.bind(this);
     this.update = this.update.bind(this);
@@ -28,7 +31,12 @@ export default class BulletManager extends React.Component<
     this.setBullets = this.setBullets.bind(this);
   }
 
+  componentDidMount() {
+    this.state.shootAudio.volume = this.props.volume;
+  }
+
   shoot() {
+    this.state.shootAudio.play();
     this.setState((prevState) => {
       const bullet = {
         id: uuidv4(),
