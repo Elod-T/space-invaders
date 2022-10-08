@@ -3,6 +3,7 @@ import React from "react";
 interface IMenuProps {
   gameState: string;
   timer: number;
+  control: "keyboard" | "tensorflow";
 }
 
 export default class Menu extends React.PureComponent<IMenuProps> {
@@ -37,8 +38,14 @@ export default class Menu extends React.PureComponent<IMenuProps> {
           <div className="text-2xl mb-4">
             {this.props.timer == 0 ? "" : this.props.timer.toFixed(2) + "s"}
           </div>
-          <span className="text-xl">Press</span>
-          <kbd className="text-xl kbd mx-1">Enter</kbd>
+          <span className="text-xl">
+            {this.props.control == "keyboard" ? "Press" : "Raise your"}
+          </span>
+
+          <kbd className="text-xl kbd mx-1">
+            {this.props.control == "keyboard" ? "Enter" : "right hand"}
+          </kbd>
+
           <span className="text-xl mr-2">
             {"to play " + (this.props.timer == 0 ? "" : "again")}
           </span>
