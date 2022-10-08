@@ -2,18 +2,19 @@ import React from "react";
 import Alien, { IAlienProps } from "./alien";
 import Player from "./player";
 import BulletManager from "./bulletManager";
-import IBulletProps from "./bullet";
 
 interface IAlienManagerProps {
   canvasWidth: number;
   canvasHeight: number;
   playerRef: React.RefObject<Player>;
   bulletManagerRef: React.RefObject<BulletManager>;
+  volume: number;
 }
 
 interface IAlienManagerState {
   direction: number;
   aliens: IAlienProps[];
+  alienDieAudio: HTMLAudioElement;
 }
 
 export default class AlienManager extends React.Component<
@@ -25,6 +26,7 @@ export default class AlienManager extends React.Component<
     this.state = {
       direction: 1,
       aliens: [],
+      alienDieAudio: new Audio("/audio/invaderkilled.wav"),
     };
     this.update = this.update.bind(this);
     this.getLowestY = this.getLowestY.bind(this);
@@ -32,6 +34,7 @@ export default class AlienManager extends React.Component<
 
   componentDidMount() {
     this.generateAliens();
+    this.state.alienDieAudio.volume = this.props.volume;
   }
 
   generateAliens() {
@@ -101,6 +104,9 @@ export default class AlienManager extends React.Component<
         ) {
           newBullets = newBullets.filter((b) => b !== bullet);
           alien.hp -= bullet.damage;
+          if (alien.hp <= 0) {
+            this.state.alienDieAudio.play();
+          }
         }
       });
       if (alien.hp > 0) {
