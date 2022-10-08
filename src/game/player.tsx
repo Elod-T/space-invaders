@@ -4,6 +4,7 @@ interface IPlayerProps {
   x: number;
   y: number;
   canvasWidth: number;
+  speed: number;
 }
 
 interface IPlayerState {
@@ -28,6 +29,7 @@ export default class Player extends React.PureComponent<
       lives: 3,
     };
     this.update = this.update.bind(this);
+    this.move = this.move.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
@@ -43,14 +45,26 @@ export default class Player extends React.PureComponent<
     switch (event.key) {
       case "ArrowLeft":
         this.setState(() => {
-          return { nextMove: -10 };
+          return { nextMove: -this.props.speed };
         });
         break;
       case "ArrowRight":
         this.setState(() => {
-          return { nextMove: 10 };
+          return { nextMove: this.props.speed };
         });
         break;
+    }
+  }
+
+  move(direction: string) {
+    if (direction === "left") {
+      this.setState({
+        nextMove: -10,
+      });
+    } else if (direction === "right") {
+      this.setState({
+        nextMove: 10,
+      });
     }
   }
 
